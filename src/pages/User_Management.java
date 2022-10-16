@@ -1,9 +1,14 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
+
+import javax.lang.model.element.Element;
+import java.util.List;
 
 public class User_Management {
 
@@ -65,5 +70,55 @@ public class User_Management {
         //hit the reset button
         driver.findElement(By.xpath("//body/div[@id='right-panel']/div[3]/form[1]/div[1]/div[1]/div[1]/a[1]")).click();
 
+        Thread.sleep(2000);
+        //select the entries from the dropdown menu
+        Select s1 = new Select(driver.findElement(By.name("size")));
+        s1.selectByIndex(3);
+
+        Thread.sleep(2000);
+        //hit the Add New Button
+        driver.findElement(By.xpath("//body/div[@id='right-panel']/div[3]/form[1]/div[3]/div[1]/div[1]/div[1]/div[1]/a[1]")).click();
+
+
+        //Fill up the User info
+        //select the staff name
+        Select s2 = new Select(driver.findElement(By.id("staff")));
+        s2.selectByIndex(8);
+        Thread.sleep(2000);
+
+        //find issue in Role in User Info
+        driver.findElement(By.xpath("//body/div[@id='right-panel']/div[3]/form[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/ul[1]/li[1]/input[1]")).click();
+
+        List<WebElement> roles = driver.findElements(By.xpath("//div[@class='chosen-drop']/ul/li"));
+        String Role;
+        Role = "Admin";
+        for (WebElement r:roles){
+            if(r.getText().equals("Role"))
+                r.click();
+        }
+        driver.findElement(By.xpath("//body/div[@id='right-panel']/div[3]/form[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/ul[1]/li[1]/input[1]")).sendKeys(Keys.ENTER);
+
+        //fill up the username
+        driver.findElement(By.id("username")).sendKeys("Test");
+
+        Thread.sleep(2000);
+        //select the status from the dropdown menu
+        Select s3 = new Select(driver.findElement(By.id("status")));
+        s3.selectByIndex(1);
+
+        Thread.sleep(2000);
+        //fill up the remarks
+        driver.findElement(By.id("remarks")).sendKeys("This is for test purpose");
+
+        Thread.sleep(2000);
+        //go to previous page
+        driver.navigate().back();
+
+        Thread.sleep(2000);
+        //perform the action btn
+        driver.findElement(By.xpath("//tbody/tr[1]/td[8]/a[1]/i[1]")).click();
+
+        Thread.sleep(1000);
+        driver.close();
     }
 }
